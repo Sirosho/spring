@@ -17,7 +17,7 @@ public class Member {
     private String uid=UUID.randomUUID().toString(); // 회원 식별번호
     private String account;
     private String password;
-    private String nickName;
+    private String nickname;
 
 //    public Member(String account, String password, String nickName) {
 //        this.uid= UUID.randomUUID().toString();
