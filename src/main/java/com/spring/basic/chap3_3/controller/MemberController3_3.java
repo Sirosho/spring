@@ -13,6 +13,8 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v3-3/members")
+//@CrossOrigin("http://127.0.0.1:5500")
+
 public class MemberController3_3 {
     private Map<String, Member> memberStore = new HashMap<>();
 
@@ -71,14 +73,19 @@ public class MemberController3_3 {
     @GetMapping("/{account}")
     public ResponseEntity<?> findById(@PathVariable String account){
 
-        if(!memberStore.containsValue(account))
+        Member foundMember = memberStore.values()
+                .stream()
+                .filter(member -> member.getAccount().equals(account))
+                .findFirst()
+                .orElse(null);
+        if(foundMember == null){
             return ResponseEntity
-                    .badRequest()
-                    .body("존재하지 않는 회원입니다.");
-
+                    .status(404)
+                    .body(account + "는 존재하지 않는 계정입니다.");
+        }
         return ResponseEntity
-                .ok()
-                .body(memberStore.get(account));
+               .ok()
+               .body(foundMember);
     }
 
 
