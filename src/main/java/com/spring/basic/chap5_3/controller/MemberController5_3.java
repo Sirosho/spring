@@ -14,6 +14,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static java.util.stream.Collectors.toList;
+
 @RestController
 @RequestMapping("/api/v5-3/members")// 맨 뒤에오는 경로의 이름은 복수형으로 쓰는 것이 관례
 @Slf4j //로그 라이브러리
@@ -64,19 +66,15 @@ public class MemberController5_3 {
 
         log.info("/api/v5-3/members : GET - 요청시작!");
 
+        List<MemberListResponse> responses = memberStore.values()
+                .stream()
+                .map(m -> MemberListResponse.from(m))
+                .collect(toList());
+
+
         List<Member> members = new ArrayList<>(memberStore.values());
-        List<MemberListResponse> responses = new ArrayList<>();
 
-        for (Member m : members) {
-            MemberListResponse listResponse = new MemberListResponse();
-            listResponse.setId(m.getUid());
-            listResponse.setEmail(m.getAccount());
-            String originNick = m.getNickname();
-            String maskingNick = "" + originNick.charAt(0) + "*" + originNick.charAt(originNick.length() - 1);
-            listResponse.setNick(maskingNick);
 
-            responses.add(listResponse);
-        }
 
 
 
@@ -101,7 +99,7 @@ public class MemberController5_3 {
         log.trace("memberList 메서드 호출 종료됨");
         return ResponseEntity
                 .ok()
-                .body(members)
+                .body(responses)
                 ;
     }
 
