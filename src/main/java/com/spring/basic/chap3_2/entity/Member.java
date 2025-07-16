@@ -20,7 +20,16 @@ public class Member {
     private String password;
     private String nickname;
 
-//    public Member(String account, String password, String nickName) {
+
+//    // DTO를 Entity로 변환하는 생성자
+//    public Member(MemberCreateDto dto) {
+//        this.uid=UUID.randomUUID().toString(); // 회원 식별번호
+//        this.account = dto.getUserAcc();
+//        this.password = dto.getPw();
+//        this.nickname = dto.getNick();
+//    }
+
+    //    public Member(String account, String password, String nickName) {
 //        this.uid= UUID.randomUUID().toString();
 //        this.account = account;
 //        this.password = password;
