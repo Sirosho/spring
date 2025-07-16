@@ -15,6 +15,7 @@ public class Member {
 
     @Builder.Default
     private String uid=UUID.randomUUID().toString(); // 회원 식별번호
+
     private String account;
     private String password;
     private String nickname;
