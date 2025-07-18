@@ -51,8 +51,9 @@ public class FeedService {
     }
 
     public FeedDetailResponse findOneProcess(Long id){
+        Feed foundFeed = feedRepository.findById(id);
 
-
+        return FeedDetailResponse.from(foundFeed);
     }
 
 

@@ -18,7 +18,7 @@ public class FeedDetailResponse {
     private String content;
     private int view;
 
-    public FeedDetailResponse FeedDetailResponse(Feed feed) {
+    public static FeedDetailResponse from(Feed feed) {
         FeedDetailResponse response = FeedDetailResponse.builder()
                 .writer(feed.getWriter())
                 .content(feed.getContent())
