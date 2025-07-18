@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 // 게시물 피드 데이터를 전담 관리하는 클래스
-// 관심사 : 데이터를 다루는 것만 관심있음. 요청응답 -> 관심없음
+// 관심사: 데이터를 다루는 것만 관심있음. 요청응답 -> 관심 없음
 @Repository
 public class FeedRepository {
 
@@ -20,52 +20,44 @@ public class FeedRepository {
     public FeedRepository() {
         Feed f1 = Feed.builder()
                 .feedId(feedNextId++)
-                .content("하하호호재밌다")
+                .content("하하호호 재밌다.")
                 .writer("호빵맨")
-                .createdAt(LocalDateTime.of(2025,3,14,13,15,0))
+                .createdAt(LocalDateTime.of(2025, 3, 14, 13, 15, 0))
                 .viewCount(3)
                 .build();
+
         Feed f2 = Feed.builder()
                 .feedId(feedNextId++)
-                .content("하하호호")
-                .writer("폼폼푸린")
-                .createdAt(LocalDateTime.of(2025,4,14,11,15,0))
-                .viewCount(7)
+                .content("산리오 칭구들 모여라~~")
+                .writer("헬로키티")
+                .createdAt(LocalDateTime.of(2025, 5, 27, 9, 23, 14))
+                .viewCount(40)
                 .build();
 
         feedStore.put(f1.getFeedId(), f1);
         feedStore.put(f2.getFeedId(), f2);
-
-
     }
 
     // 데이터 전체조회를 하는 로직
-
-    public List<Feed> getFeeds(){
+    public List<Feed> getFeeds() {
         return new ArrayList<>(feedStore.values());
     }
 
     // 데이터 저장 로직
-    public void save(Feed feed){
+    public void save(Feed feed) {
         feed.setFeedId(feedNextId++);
-        feed.setCreatedAt(LocalDateTime.now());
-
-        feedStore.put(feed.getFeedId(),feed);
-
+        feedStore.put(feed.getFeedId(), feed);
     }
 
     // 데이터 삭제 로직
-    public void delete(Long id) {
-        feedStore.remove(id);
+    public boolean deleteById(Long id) {
+        Feed removed = feedStore.remove(id);
+        return removed != null;
     }
 
-    public List<Feed> find(Long id) {
-
-        List<Feed> collectedFeeds = feedStore.values().stream()
-                .filter(feed -> feed.getFeedId().equals(id))
-                .toList();
-
-
-        return collectedFeeds;
+    // 데이터 개별 조회 로직
+    public Feed findById(Long id) {
+        return feedStore.get(id);
     }
+
 }
